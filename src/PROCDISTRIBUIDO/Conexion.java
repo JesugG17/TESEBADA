@@ -11,7 +11,7 @@ public class Conexion {
     private final String password = "tupasssword";
 
     private Conexion() {
-        String url = "jdbc:sqlserver://25.2.141.212;databaseName=test;encrypt=true;trustServerCertificate=true";
+        String url = "jdbc:sqlserver://25.2.141.212;databaseName=Banco;encrypt=true;trustServerCertificate=true";
         try {
             Connection cnn = DriverManager.getConnection(url, user, password);
             statement = cnn.createStatement();
