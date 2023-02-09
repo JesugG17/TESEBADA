@@ -71,8 +71,7 @@ public class AppProcDistri extends JFrame implements ActionListener {
 
     public boolean existeEstado() {
 
-        String estado = textField.getText();
-        String query = "SELECT ESTADO FROM CHEQUERA WHERE ESTADO = '" + estado + "'";
+        String query = "SELECT * FROM CHEQUERA";
         try {
             ResultSet tuplas = smt.executeQuery(query);
 
@@ -84,6 +83,8 @@ public class AppProcDistri extends JFrame implements ActionListener {
                         JOptionPane.ERROR_MESSAGE
                 );
             }
+
+            System.out.println(tuplas.getString("chequera"));
 
         } catch (Exception error) {
             System.out.println(error.getMessage());
