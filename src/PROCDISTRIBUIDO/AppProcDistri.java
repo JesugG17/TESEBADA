@@ -76,38 +76,13 @@ public class AppProcDistri extends JFrame implements ActionListener {
     }
 
     private void updateDatos() {
-        String query = "select chequera,saldo from chequera where estado = '" + textEstado.getText() + "'";
+        String query = "exec sp_actualizarSaldo '" + textEstado.getText() + "'";
         try {
-            ResultSet tuplas = smt.executeQuery(query);
-            con.setAutoCommit(false);
-            while (tuplas.next()) {
-                String id = tuplas.getString(1);
-                int nuevoSaldo = tuplas.getInt(2) + (int) (Math.random() * 10 + 1) * 1000;
-                actualizar(id, nuevoSaldo);
-            }
-            con.commit();
-            con.setAutoCommit(true);
+            smt.executeQuery(query);
         } catch (SQLException error) {
-            try {
-                con.rollback();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            System.out.println(error.getMessage());
+            System.out.println("Ocurrio un error: " + error);
         }
         System.out.println("se actualizaron los datos correctamente");
-    }
-
-    private void actualizar(String id, int nuevoSaldo) {
-        try {
-            PreparedStatement pstmt = con
-                    .prepareStatement("update CHEQUERA set saldo = ? where CHEQUERA=? and estatus='A'");
-            pstmt.setInt(1, nuevoSaldo);
-            pstmt.setString(2, id);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void llenarBd() {
